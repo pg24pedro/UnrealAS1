@@ -49,6 +49,10 @@ void ALivingBeing::TakeDamage_Implementation(const float& damageAmount)
 	}
 }
 
+
+
+
+
 // Called every frame
 void ALivingBeing::Tick(float DeltaTime)
 {

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "DamageInterface.h"
+#include "DamageOther.h"
 #include "LivingBeing.generated.h"
 
 class UStaticMeshComponent;
@@ -41,6 +42,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void TakeDamage_Implementation(const float& damageAmount) override;
+	
 
 private:
 	

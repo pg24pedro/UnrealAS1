@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageOther.h"
 #include "LivingBeing.h"
 #include "Alien.generated.h"
 
@@ -10,7 +11,7 @@
  * 
  */
 UCLASS()
-class C4_LIVINGORGANISM_API AAlien : public ALivingBeing
+class C4_LIVINGORGANISM_API AAlien : public ALivingBeing, public IDamageOther
 {
 	GENERATED_BODY()
 
@@ -22,10 +23,12 @@ public:
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	float DamageAmount = 1.0f;
+	
 
 protected:
 
 	UFUNCTION()
-	void DoDamage(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	//void DoDamage(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	virtual void MakeDamage_Implementation(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit) override;
 	
 };
