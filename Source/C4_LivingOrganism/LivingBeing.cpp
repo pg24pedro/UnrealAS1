@@ -63,7 +63,7 @@ void ALivingBeing::Tick(float DeltaTime)
 
 void ALivingBeing::MoveOrganism()
 {
-	const FVector velocity = Nose->GetForwardVector()* movementSpeed * Body->GetMass();
+	const FVector velocity = Nose->GetForwardVector() * movementSpeed * Body->GetMass();
 	Body->AddForce(velocity,NAME_None,true );
 }
 

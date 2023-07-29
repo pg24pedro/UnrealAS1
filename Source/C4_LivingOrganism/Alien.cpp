@@ -5,6 +5,7 @@
 
 #include "Barrel.h"
 #include "Human.h"
+#include "SpaceInvaders/Defaults/Ship.h"
 
 AAlien::AAlien(const FObjectInitializer& ObjectInitializer)
 {
@@ -63,6 +64,14 @@ void AAlien::MakeDamage_Implementation(AActor* SelfActor, AActor* OtherActor, FV
 	if(IsValid(barrelToHit))
 	{
 		barrelToHit->Execute_TakeDamage(barrelToHit,DamageAmount);
+	}
+
+	TObjectPtr<AShip> playersShip = Cast<AShip>(OtherActor);
+
+	//Hits the actor and reduces the health of it
+	if(IsValid(playersShip))
+	{
+		playersShip->Execute_TakeDamage(playersShip,DamageAmount);
 	}
 	/*IDamageOther::MakeDamage_Implementation(SelfActor, OtherActor, NormalImpulse, Hit);
 	if(OtherActor->Implements<UDamageInterface>())

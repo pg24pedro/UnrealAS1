@@ -4,6 +4,7 @@
 #include "Bullet.h"
 
 #include "Projects.h"
+#include "C4_LivingOrganism/Alien.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -29,7 +30,24 @@ ABullet::ABullet()
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OnActorBeginOverlap.AddDynamic(this,&ThisClass::OverlapWithAlien);
+	//OnActorHit.AddDynamic(this, &ThisClass::MakeDamage_Implementation);
 	
+
+	
+}
+
+void ABullet::OverlapWithAlien(AActor* myBullet, AActor* theAlien)
+{
+	TObjectPtr<AAlien> AlienToHit = Cast<AAlien>(theAlien);
+
+	if(IsValid(AlienToHit))
+	{
+		AlienToHit->Execute_TakeDamage(AlienToHit,DamageAmount);
+
+	}
+
 }
 
 // Called every frame
@@ -37,4 +55,19 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+/*void ABullet::MakeDamage_Implementation( AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse,
+	const FHitResult& Hit)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Alien Shot"));
+
+	IDamageOther::MakeDamage_Implementation(SelfActor, OtherActor, NormalImpulse, Hit);
+	TObjectPtr<AAlien> AlienToHIt = Cast<AAlien>(OtherActor);
+
+	if(IsValid(AlienToHIt))
+	{
+		AlienToHIt->Execute_TakeDamage(AlienToHIt,DamageAmount);
+	}
+
+}*/
 

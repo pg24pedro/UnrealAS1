@@ -4,6 +4,7 @@
 #include "Ship.h"
 
 #include "MovieSceneSequenceID.h"
+#include "Components/ArrowComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Spawnable/Bullet.h"
 
@@ -56,6 +57,19 @@ void AShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed,this,&ThisClass::SpawnBullet);
 }
 
+void AShip::TakeDamage_Implementation(const float& damageAmount)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Player Hit"));
+
+	playerLife-=damageAmount;
+
+	if(playerLife <= 0)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Player Dead"));
+		Destroy();
+	}
+}
+
 void AShip::MoveForward(const float value)
 {
 	AddMovementInput(GetActorForwardVector(),value,true);
@@ -69,6 +83,9 @@ void AShip::MoveRight(const float value)
 void AShip::SpawnBullet()
 {
 	const TObjectPtr<UWorld> world = GetWorld();
+	FRotator PlayerRotation = GetControlRotation();
+	FVector PlayerForwardVector = GetActorForwardVector();
+	
 	if(!IsValid(world))
 	{
 		return;
@@ -79,8 +96,12 @@ void AShip::SpawnBullet()
 		return;
 	}
 
-	const FVector SpawnLocation = (GetActorLocation() + FVector{50.0f,0.0f,0.0f});
-	world->SpawnActor<ABullet>(BulletClassToSpawn, SpawnLocation,FRotator::ZeroRotator);
+	const FVector SpawnLocation = (GetActorLocation() + FVector{0.0f,200.0f,0.0f});
+	FActorSpawnParameters BulletSpawnParams;
+	BulletSpawnParams.Owner = this;
+	
+	ABullet* MyBullet = world->SpawnActor<ABullet>(BulletClassToSpawn,SpawnLocation,PlayerRotation,BulletSpawnParams);
+	//world->SpawnActor<ABullet>(BulletClassToSpawn, SpawnLocation,FRotator::ZeroRotator);
 
 	
 }
