@@ -32,6 +32,8 @@ AShip::AShip()
 void AShip::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PlayerScore = 0;
 	
 }
 

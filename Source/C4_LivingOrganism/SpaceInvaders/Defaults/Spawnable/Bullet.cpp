@@ -5,6 +5,7 @@
 
 #include "Projects.h"
 #include "C4_LivingOrganism/Alien.h"
+#include "C4_LivingOrganism/SpaceInvaders/Defaults/Ship.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -46,6 +47,13 @@ void ABullet::OverlapWithAlien(AActor* myBullet, AActor* theAlien)
 	{
 		AlienToHit->Execute_TakeDamage(AlienToHit,DamageAmount);
 
+		AShip* PlayerShip = GetWorld()->GetFirstPlayerController()->GetPawn<AShip>();
+
+		if(PlayerShip)
+		{
+			PlayerShip->PlayerScore += 10;
+		}
+		
 	}
 
 }

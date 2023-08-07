@@ -43,8 +43,14 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void TakeDamage_Implementation(const float& damageAmount) override;
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	float PlayerScore;
 
 private:
+
+
+	
 	UFUNCTION()
 	void MoveForward(const float value);
 

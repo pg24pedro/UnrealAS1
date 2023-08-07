@@ -71,7 +71,9 @@ void AAlien::MakeDamage_Implementation(AActor* SelfActor, AActor* OtherActor, FV
 	//Hits the actor and reduces the health of it
 	if(IsValid(playersShip))
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Player Hit from alien"));
 		playersShip->Execute_TakeDamage(playersShip,DamageAmount);
+		
 	}
 	/*IDamageOther::MakeDamage_Implementation(SelfActor, OtherActor, NormalImpulse, Hit);
 	if(OtherActor->Implements<UDamageInterface>())
